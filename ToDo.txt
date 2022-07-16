@@ -1,0 +1,9 @@
+Falta:
+-linkear todos los archivos en un main que llame los otros archivos Python para que el programa quede todo junto
+-Agregar campo de precios a los platos
+-Modificar el Gestor para agregar precio al crear el plato
+-modificar el menu para permitir seleccionar platos
+-modificar el menu para mostrar el total del precio de los platos seleccionados
+-ver como manejar los platos seleccionados, ver si se guardan los selecc en un carrito o algo similar(otro componente)
+-ver como se calcula el total(armar otra BD, manejarlo con SQL,guardarlo local en una var)
+-Acomodar el diseño de la GI para que quede mas linda y prolija
