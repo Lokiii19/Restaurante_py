@@ -3,23 +3,18 @@ from tkinter import ttk as ttk
 from tkinter import messagebox as messagebox
 from Usuarios import Usuarios as User
 
-root = Tk()
 
 '''Cambiar esta generacion local por una BD'''
 usuarios = []
 admin = User("admin", "1234")
 usuarios.append(admin)
 
-
-# def createGUI():
-# Ventana Principal Login
-
-root.title("login usuario")
-
+root = ""
 
 # Funciones
 
-def iniciarSesion():
+
+def iniciarSesion(nombreUsuario, contraseñaUsuario):
     logeado = False
     error = ""
     for user in usuarios:
@@ -41,7 +36,7 @@ def iniciarSesion():
         messagebox.showerror("Error", "Usuario inexistente")
 
 
-def registrarUsuario():
+def registrarUsuario(nombreUsuario, contraseñaUsuario):
     name = nombreUsuario.get()
     password = contraseñaUsuario.get()
     newUser = User(name, password)
@@ -62,52 +57,44 @@ def registrarUsuario():
 
 
 # MainFrame
-mainFrame = Frame(root)
-mainFrame.pack()
-mainFrame.config(width=480, height=320)  # ,bg="lightblue")
+
+
+def crear_login(root):
+    root = root
+    popup = Toplevel(root)
+    mainFrame = Frame(popup)
+    mainFrame.pack()
+    mainFrame.config(width=480, height=320)  # ,bg="lightblue")
 
 # Textos y Titulos
-titulo = Label(mainFrame, text="Login Restaurante_py", font=("Arial,24"))
-titulo.grid(column=0, row=0, padx=10, pady=10, columnspan=2)
+    titulo = Label(mainFrame, text="Login Restaurante_py", font=("Arial,24"))
+    titulo.grid(column=0, row=0, padx=10, pady=10, columnspan=2)
 
-nombreLabel = Label(mainFrame, text="Nombre:  ")
-nombreLabel.grid(column=0, row=1)
-passLabel = Label(mainFrame, text="Contraseña: ")
-passLabel.grid(column=0, row=2)
+    nombreLabel = Label(mainFrame, text="Nombre:  ")
+    nombreLabel.grid(column=0, row=1)
+    passLabel = Label(mainFrame, text="Contraseña: ")
+    passLabel.grid(column=0, row=2)
+
 
 # Entradas de texto
-nombreUsuario = StringVar()
-nombreUsuario.set("")
-nombreEntry = Entry(mainFrame, textvariable=nombreUsuario)
-nombreEntry.grid(column=1, row=1)
+    nombreUsuario = StringVar()
+    nombreUsuario.set("")
+    contraseñaUsuario = StringVar()
+    contraseñaUsuario.set("")
+    nombreEntry = Entry(mainFrame, textvariable=nombreUsuario)
+    nombreEntry.grid(column=1, row=1)
 
-contraseñaUsuario = StringVar()
-contraseñaUsuario.set("")
-contraseñaEntry = Entry(
-    mainFrame, textvariable=contraseñaUsuario, show="*")
-contraseñaEntry.grid(column=1, row=2)
+    contraseñaEntry = Entry(
+        mainFrame, textvariable=contraseñaUsuario, show="*")
+    contraseñaEntry.grid(column=1, row=2)
 
 # Botones
-newBut = ttk.Button
-iniciarsesionbutton = ttk.Button(
-    mainFrame, text="Iniciar Sesión", command=iniciarSesion)
-iniciarsesionbutton.grid(column=1, row=3, ipadx=5,
-                         ipady=5, padx=10, pady=10)
+    newBut = ttk.Button
+    iniciarsesionbutton = ttk.Button(
+        mainFrame, text="Iniciar Sesión", command=lambda: iniciarSesion(nombreUsuario, contraseñaUsuario))
+    iniciarsesionbutton.grid(column=1, row=3, ipadx=5,
+                             ipady=5, padx=10, pady=10)
 
-registrarbutton = ttk.Button(
-    mainFrame, text="Registrar", command=registrarUsuario)
-registrarbutton.grid(column=0, row=3, ipadx=5, ipady=5, padx=10, pady=10)
-
-# root.mainloop()
-
-
-'''if __name__ == "__main__":
-    user1 = usuarios(input("Ingrese su usuario:  "),
-                     input("Ingrese su contraseña:  "))
-    user1 = usuarios("Grupo4", "1234")
-    usuarios.append(user1)
-    createGUI()
-'''
-
-
-root.mainloop()
+    registrarbutton = ttk.Button(
+        mainFrame, text="Registrar", command=lambda: registrarUsuario(nombreUsuario, contraseñaUsuario))
+    registrarbutton.grid(column=0, row=3, ipadx=5, ipady=5, padx=10, pady=10)

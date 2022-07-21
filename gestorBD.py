@@ -3,14 +3,7 @@ from tkinter import *
 from tkinter import simpledialog
 from tkinter import messagebox
 
-# config root
-root = Tk()
-root.title("Gestor de Base de datos")
-root.resizable(0, 0)
-root.config(bd=25, relief="sunken")
-
-Label(root, text="   Manejo de la BD   ", fg="green",
-      font=("Calibri", 20, "bold italic")).pack()
+root = ""
 
 
 def crear_bd():
@@ -119,18 +112,23 @@ def mostrar_menu():
     conexion.close()
 
 
-# Crear la base de datos
-crear_bd()
-
 # Menú de opciones del programa
+def crear_manager(root):
+    root = root
+    popup = Toplevel(root)
+    BDFrame = Frame(popup)
+    BDFrame.pack()
+    # Crear la base de datos
+    crear_bd()
 
-Label(root, fg="lightgreen", font=("Calibri", 20, "bold italic"),
-      text="Bienvenido al gestor del restaurante!").pack()
-Label(root, fg="red", font=("Calibri", 15, "bold italic"),
-      text="Por Favor seleccione una opcion:").pack()
-Button(root, text="Agregar una categoría", command=agregar_categoria).pack()
-Button(root, text="Agregar un plato", command=selec_categoria).pack()
-Button(root, text="Mostrar el Menu", command=mostrar_menu).pack()
-# Button(root, text="Salir del Gestor", command=ToDO).pack()
-
-root.mainloop()
+    Label(BDFrame, text="   Manejo de la BD   ", fg="green",
+          font=("Calibri", 20, "bold italic")).pack()
+    Label(BDFrame, fg="lightgreen", font=("Calibri", 20, "bold italic"),
+          text="Bienvenido al gestor del restaurante!").pack()
+    Label(BDFrame, fg="red", font=("Calibri", 15, "bold italic"),
+          text="Por Favor seleccione una opcion:").pack()
+    Button(BDFrame, text="Agregar una categoría",
+           command=agregar_categoria).pack()
+    Button(BDFrame, text="Agregar un plato", command=selec_categoria).pack()
+    Button(BDFrame, text="Mostrar el Menu", command=mostrar_menu).pack()
+    # Button(root, text="Salir del Gestor", command=ToDO).pack()

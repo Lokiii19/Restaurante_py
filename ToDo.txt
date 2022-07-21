@@ -1,7 +1,9 @@
 Falta:
+-Arreglar bug de gestor, deja agregar categorias vacias como "" y como None
+-Arreglar bug de gestor no accede a crear platos ni mostrar menu
+
 -crear BD para almacenar los objetos de los usuarios creados
 -modificar login para que se maneje con los datos de la BD
--linkear todos los archivos en un main que llame los otros archivos Python para que el programa quede todo junto
 -Agregar campo de precios a los platos
 -Modificar el Gestor para agregar precio al crear el plato
 -modificar el menu para permitir seleccionar platos
