@@ -29,6 +29,30 @@ def crear_bd():
     else:
         print("La tabla de Platos se ha creado correctamente.")
 
+    try:
+        cursor.execute('''CREATE TABLE precios(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                precio int(100) NOT NULL,
+                FOREIGN KEY(plato_id) REFERENCES plato(id))
+                )''')
+    except sqlite3.OperationalError:
+        print("La tabla de precios ya existe.")
+    else:
+        print("La tabla de Precios se ha creado correctamente.")
+
+    try:
+        cursor.execute('''CREATE TABLE usuario(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre VARCHAR(50) UNIQUE NOT NULL,
+                contraseña VARCHAR(50) NOT NULL,
+                logeado INT(1) NOT NULL
+                )''')
+
+    except sqlite3.OperationalError:
+        print("La tabla de usuarios ya existe.")
+    else:
+        print("La tabla de Usuarios se ha creado correctamente.")
+
     conexion.close()
 
 
@@ -54,7 +78,7 @@ def agregar_categoria():
     conexion.close()
 
 
-def selec_categoria():
+def selec_categoria(root):
 
     conexion = sqlite3.connect("restaurante.db")
     cursor = conexion.cursor()
@@ -87,7 +111,7 @@ def agregar_plato(categoria_usuario):
     conexion.close()
 
 
-def mostrar_menu():
+def mostrar_menu(root):
 
     conexion = sqlite3.connect("restaurante.db")
     cursor = conexion.cursor()
@@ -129,6 +153,8 @@ def crear_manager(root):
           text="Por Favor seleccione una opcion:").pack()
     Button(BDFrame, text="Agregar una categoría",
            command=agregar_categoria).pack()
-    Button(BDFrame, text="Agregar un plato", command=selec_categoria).pack()
-    Button(BDFrame, text="Mostrar el Menu", command=mostrar_menu).pack()
+    Button(BDFrame, text="Agregar un plato",
+           command=lambda: selec_categoria(root)).pack()
+    Button(BDFrame, text="Mostrar el Menu",
+           command=lambda: mostrar_menu(root)).pack()
     # Button(root, text="Salir del Gestor", command=ToDO).pack()
