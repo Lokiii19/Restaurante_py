@@ -2,6 +2,7 @@ import sqlite3
 from tkinter import *
 from tkinter import simpledialog
 from tkinter import messagebox
+from xml.dom import NoModificationAllowedErr
 
 root = ""
 
@@ -30,11 +31,12 @@ def crear_bd():
         print("La tabla de Platos se ha creado correctamente.")
 
     try:
-        cursor.execute('''CREATE TABLE precios(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                precio int(100) NOT NULL,
-                FOREIGN KEY(plato_id) REFERENCES plato(id))
-                )''')
+        cursor.execute('''CREATE TABLE precios (
+            id	INTEGER NOT NULL,
+            precio	INTEGER NOT NULL,
+            id_plato	INTEGER NOT NULL UNIQUE,
+            PRIMARY KEY(id AUTOINCREMENT),
+            FOREIGN KEY(id_plato) REFERENCES plato (id))''')
     except sqlite3.OperationalError:
         print("La tabla de precios ya existe.")
     else:
@@ -44,8 +46,9 @@ def crear_bd():
         cursor.execute('''CREATE TABLE usuario(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nombre VARCHAR(50) UNIQUE NOT NULL,
-                contraseña VARCHAR(50) NOT NULL,
-                logeado INT(1) NOT NULL
+                contrasenia VARCHAR(50) NOT NULL,
+                logeado INT(1) NOT NULL DEFAULT 0,
+                retry	INT(1) NOT NULL DEFAULT 3,
                 )''')
 
     except sqlite3.OperationalError:
@@ -111,6 +114,40 @@ def agregar_plato(categoria_usuario):
     conexion.close()
 
 
+def selec_plato(root):
+
+    conexion = sqlite3.connect("restaurante.db")
+    cursor = conexion.cursor()
+
+    platos = cursor.execute("SELECT * FROM plato").fetchall()
+    popup = Toplevel(root)
+    Label(popup, text="Platos Disponibles", width=50).pack()
+    for plato in platos:
+        Button(popup, text=f"[{plato[0]}] {plato[1]}",
+               command=lambda: agregar_precio(plato[0], plato[1]), width=50).pack()
+
+
+def agregar_precio(plato_usuario, nom_plato_usuario):
+    conexion = sqlite3.connect("restaurante.db")
+    cursor = conexion.cursor()
+    plato_usuario = plato_usuario
+    nom_plato_usuario = nom_plato_usuario
+    precio = simpledialog.askstring(
+        "Insertar Precio", f"Por favor inserte el precio para agregar al plato {nom_plato_usuario}")
+    try:
+        cursor.execute("INSERT INTO precios VALUES (null, '{}', {})".format(
+            precio, plato_usuario))
+    except sqlite3.IntegrityError:
+        messagebox.showerror(
+            "Error", f"El plato '{nom_plato_usuario}' ya tiene precio")
+    else:
+        messagebox.showinfo(
+            "Correcto", f"Precio '{precio}' agregado correctamente al plato {nom_plato_usuario}")
+
+    conexion.commit()
+    conexion.close()
+
+
 def mostrar_menu(root):
 
     conexion = sqlite3.connect("restaurante.db")
@@ -129,8 +166,13 @@ def mostrar_menu(root):
         platos = cursor.execute(
             "SELECT * FROM plato WHERE categoria_id={}".format(categoria[0])).fetchall()
         for plato in platos:
+            precio = cursor.execute(
+                f"SELECT * FROM precios WHERE id_plato={plato[0]}").fetchall()
             Label(popup, text=f"\t{plato[1]}",
                   width=30, justify="left", bg='green').grid(row=r, column=2, columnspan=2)
+            Label(popup, text=f"\t$ {precio[1]}",
+                  width=30, justify="left", bg='green').grid(row=r, column=4, columnspan=2)
+            precio = ""
             r = r+1
 
     conexion.close()
@@ -155,6 +197,8 @@ def crear_manager(root):
            command=agregar_categoria).pack()
     Button(BDFrame, text="Agregar un plato",
            command=lambda: selec_categoria(root)).pack()
+    Button(BDFrame, text="Agregar un precio",
+           command=lambda: selec_plato(root)).pack()
     Button(BDFrame, text="Mostrar el Menu",
            command=lambda: mostrar_menu(root)).pack()
     # Button(root, text="Salir del Gestor", command=ToDO).pack()

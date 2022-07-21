@@ -1,9 +1,11 @@
 Falta:
 -Arreglar bug de gestor, deja agregar categorias vacias como "" y como None
-
+-revisar bug de indices del gestor, no pasa bien los precios, no muestra bien el menu
+-termnar de modificar el user para cambiarlo de clase a funciones
 -modificar login para que se maneje con los datos de la BD
--Agregar campo de precios a los platos
--Modificar el Gestor para agregar precio al crear el plato
+
+-modificar la interfaz para que cuando se completen las funciones se desmonten los widgets
+
 -modificar el menu para permitir seleccionar platos
 -modificar el menu para mostrar el total del precio de los platos seleccionados
 -ver como manejar los platos seleccionados, ver si se guardan los selecc en un carrito o algo similar(otro componente)

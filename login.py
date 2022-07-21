@@ -1,3 +1,4 @@
+import sqlite3
 from tkinter import *
 from tkinter import ttk as ttk
 from tkinter import messagebox as messagebox
@@ -5,9 +6,10 @@ from Usuarios import Usuarios as User
 
 
 '''Cambiar esta generacion local por una BD'''
-usuarios = []
-admin = User("admin", "1234")
-usuarios.append(admin)
+conexion = sqlite3.connect("restaurante.db")
+cursor = conexion.cursor()
+usuarios = conexion.execute("SELECT * FROM usuario").fetchall()
+conexion.close()
 
 root = ""
 
@@ -37,6 +39,8 @@ def iniciarSesion(nombreUsuario, contraseñaUsuario):
 
 
 def registrarUsuario(nombreUsuario, contraseñaUsuario):
+    conexion = sqlite3.connect("restaurante.db")
+    cursor = conexion.cursor()
     name = nombreUsuario.get()
     password = contraseñaUsuario.get()
     newUser = User(name, password)
@@ -51,9 +55,11 @@ def registrarUsuario(nombreUsuario, contraseñaUsuario):
                             f"El usuario [{name}] ya existe")
         error = 0
     else:
-        usuarios.append(newUser)
+        cursor.execute("INSERT INTO usuario VALUES (null, '{}', {})".format(
+            nombreUsuario, contraseñaUsuario))
         messagebox.showinfo("Registro exitoso",
                             f"Se registró el usuario [{name}] con exito")
+    conexion.close()
 
 
 # MainFrame
