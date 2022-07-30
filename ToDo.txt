@@ -1,11 +1,15 @@
 Falta:
--Arreglar bug de gestor, deja agregar categorias vacias como "" y como None
--revisar bug de indices del gestor, no pasa bien los precios, no muestra bien el menu
--termnar de modificar el user para cambiarlo de clase a funciones
--modificar login para que se maneje con los datos de la BD
+-renderizado condicional de login/logout
+-terminar de implementar el uso de la global var del usuario para renderizado condicional
+-terminar de armar la funcion de gestion de usuarios
+-modificar los botones condicionales con el usuario admin logueado (admin users)
+-manejar el seteo de retrys en el panel de usuarios del admin
+
+
+-cuando se resuelva la var que mantiene el usuario logueado permitir cambiar la pass de la BD
 
 -modificar la interfaz para que cuando se completen las funciones se desmonten los widgets
-
+-registro: manejar registro de usuario para que de alerta cuando los campos estan vacios
 -modificar el menu para permitir seleccionar platos
 -modificar el menu para mostrar el total del precio de los platos seleccionados
 -ver como manejar los platos seleccionados, ver si se guardan los selecc en un carrito o algo similar(otro componente)
