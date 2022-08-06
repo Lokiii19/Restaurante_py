@@ -1,11 +1,10 @@
 Falta:
+-arreglar el seteo de retrys en el panel de usuarios del admin
+
+
 -renderizado condicional de login/logout
 -terminar de implementar el uso de la global var del usuario para renderizado condicional
--terminar de armar la funcion de gestion de usuarios
 -modificar los botones condicionales con el usuario admin logueado (admin users)
--manejar el seteo de retrys en el panel de usuarios del admin
-
-
 -cuando se resuelva la var que mantiene el usuario logueado permitir cambiar la pass de la BD
 
 -modificar la interfaz para que cuando se completen las funciones se desmonten los widgets

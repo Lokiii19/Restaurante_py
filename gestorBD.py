@@ -2,6 +2,7 @@ import sqlite3
 from tkinter import *
 from tkinter import simpledialog
 from tkinter import messagebox
+from admin import *
 
 root = ""
 
@@ -200,7 +201,31 @@ def mostrar_menu(root):
 
 
 def mostrar_users(root):
-    pass
+    conexion = sqlite3.connect("restaurante.db")
+    cursor = conexion.cursor()
+    usuarios = cursor.execute("SELECT * FROM usuario").fetchall()
+    popup = Toplevel(root)
+    Label(popup, text="Lista de Usuarios", width=50).grid(
+        row=0, column=0, columnspan=3)
+    r = 1
+    for user in usuarios:
+        Label(popup, text=f"{user[1]}",
+              justify="left", width=50, bg='red').grid(row=r, column=0)
+        Label(popup, text=f"logueado: {user[3]}",
+              justify="left", width=50, bg='red').grid(row=r, column=1)
+        Label(popup, text=f"reintentos: {user[4]}",
+              justify="left", width=50, bg='red').grid(row=r, column=2)
+        r += 1
+    row = r + 1
+    Label(popup, text="Acciones", width=50).grid(
+        row=r, column=0, columnspan=3)
+    Button(popup, text="Crear usuario", command=lambda: selec_user(
+        root)).grid(row=row, column=0)
+    Button(popup, text="Reiniciar reintentos",
+           command=lambda: reiniciar_retry).grid(row=row, column=1)
+    Button(popup, text="Modificar usuario",
+           command=lambda: select_user(root)).grid(row=row, column=2)
+
 
 # Menú de opciones del programa
 
@@ -230,5 +255,5 @@ def crear_manager(root):
            command=lambda: mostrar_menu(root)).pack()
 # if user=="admin" and user== logueado:
     Button(BDFrame, text="Administrar Usuarios",
-           command=lambda: mostrar_users).pack()
+           command=lambda: mostrar_users(root)).pack()
     # Button(root, text="Salir del Gestor", command=ToDO).pack()
