@@ -1,7 +1,9 @@
 import sqlite3
+import User
+import global_var
 
-user = "admin"
-
+User.conectar(None,"admin", "admin")
+user= global_var.usr_activo
 
 def connected(user):
     conexion = sqlite3.connect("restaurante.db")

@@ -113,7 +113,6 @@ def crear_login(root):
 # Botones
     iniciarsesionbutton = Button(mainFrame, text="Iniciar Sesión", command=lambda: conectar(
         mainFrame, nombreUsuario, contraseñaUsuario)).grid(column=1, row=3, ipadx=5, ipady=5, padx=10, pady=10)
-    print(f"variable global={global_var.usr_activo}")
 
 
 """ if connected(global_var.usr_activo) == True:
